@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header"
+th:content="${_csrf.headerName}" />
+	<meta charset="UTF-8">
+	<title>Inicio</title>
+	<link rel="stylesheet" th:href="@{/css/estilo.css}">
+	<script th:src="@{/js/ajax.js}"></script>
+
+	<style>
+		.badge {
+			font-size: 1em;
+		}
+		
+	#datos {width:  500px;
+	margin-right: auto;
+	margin-left: auto;
+	}
+	</style>
+	<link th:href="@{/css/signin.css}" rel="stylesheet">
+
+
+	<script>
+
+		function editarTarea() {
+			$("#modal").show();
+		}
+		
+		function cerrarModal(){
+			$("#modal").hide();
+		}
+		
+	</script>
+
+</head>
+
+<body>
+
+	<nav th:replace="fragments/navbar"></nav>
+
+	<div id="wrapper" class="text-center">
+
+<div id="datos">
+		<fieldset>
+			<legend th:text="${tarea.titulo}"></legend>
+
+				<p><strong>Descripción</strong>.</p>
+				<p th:text="${tarea.descripcion}"></p>
+				
+				<p><strong>Prioridad</strong>.</p>
+				<p th:text="${tarea.prioridad}"></p>
+				
+				<p><strong>Empleado</strong>.</p>
+				<p th:text="${tarea.usuarios.nombre_usuario}"></p>
+				<p><strong>Estado</strong>.</p>
+				<p th:text="${tarea.estado}"></p>
+						
+
+
+			
+			<center> <button onclick="editarTarea()" class="btn btn-lg btn-primary btn-block">Editar Tarea
+				</button> </center>
+
+		</fieldset>
+		
+		</div>
+	</div >
+
+	<div id="modal" class="modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Editar Tarea</h5>
+					<button type="button" onclick="cerrarModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true"></span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form th:action="@{/tarea/editar}" th:method="POST" class="form-signin">
+
+						<fieldset>
+
+							<div class="form-group">
+								<label for="inputNombre">Identificador de la tarea</label> <input type="text"
+									class="form-control" id="inputId" name="inputId" th:value="${tarea.id_tarea}" disabled >
+							</div>
+
+
+							<div class="form-group">
+								<label for="inputNombre">Nombre de la tarea</label> <input th:value="${tarea.titulo}" type="text"
+									class="form-control" id="inputNombre" name="inputNombre" aria-describedby="emailHelp"
+									placeholder="Crear test de unidad..">
+								<small id="inputNombre" class="form-text text-muted">Se
+									claro con el nombre</small>
+							</div>
+
+							<div class="form-group">
+								<label for="inputPrioridad">Prioridad</label>
+								<select class="form-select"th:value="${tarea.prioridad}" name="inputPrioridad" id="inputPrioridad">
+									<option value="BAJA">Baja</option>
+									<option value="MEDIA">Media</option>
+									<option value="ALTA">Alta</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="inputPrioridad">Estado</label>
+								<select class="form-select"th:value="${tarea.estado}" name="inputEstado" id="inputEstado">
+									<option value="En revision">En revision</option>
+									<option value="En curso">En curso</option>
+									<option value="Preparada">Preparada</option>
+								</select>
+							</div>
+
+
+
+							<div class="form-group">
+								<label for="inputTrabajadores">Empleados</label> <!--  <select  class="form-select"
+									id="inputTrabajadores" name="inputTrabajadores">
+									<option value="1">Luis</option>
+									<option value="2">Erik</option>
+									<option value="3">Sergio</option>
+									<option value="4">Alejandro</option>
+									<option value="5">Salma</option>
+									<option value="6">Jessica</option>
+									<option value="7">Moha</option>
+									<option value="8">David</option>
+									<option value="9">Christohper</option>
+									
+								</select>-->
+								<select  class="form-select"  name="inputTrabajadores">
+							            <option th:each="user : ${usuarios}"
+							                    th:text="${user.nombre_usuario}"
+							                    th:value="${user.id_usuario}">
+							        </select>
+							</div>
+							<br>
+							<center> <button onclick="editarTarea" class="btn btn-lg btn-primary btn-block">Modificar
+									Tarea
+								</button> </center>
+
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

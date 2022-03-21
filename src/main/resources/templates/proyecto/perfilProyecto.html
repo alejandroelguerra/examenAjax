@@ -1,0 +1,404 @@
+<html>
+<head>
+    
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" disabled="" href="https://pro.fontawesome.com/releases/v6.0.0-beta2/css/all.css">
+
+    <title>Examen 2º Ev</title>
+    <author></author>
+    <meta name="author" content="Alumno Alumno">
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script type="text/javascript" th:src="@{bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/kanban.js}"></script>
+    <script th:src="@{/js/tarea.js}"></script>
+    <script th:src="@{/js/javascript_alumno.js}"></script>
+    
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/kanban.css}" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+</head>
+<body>
+<nav th:replace="fragments/navbar"></nav>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Home
+                  <span class="visually-hidden">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+              </li>
+              <li class="nav-item" onclick="anadirTarjeta()">
+                <a class="nav-link" href="#">About</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Separated link</a>
+                </div>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-sm-2" type="text" placeholder="Search">
+              <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+
+<div class="container-fluid pt-3">
+    <div style="text-align: center;">
+        <div class="form-check form-switch " style="float: left; font-size: 20px;">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
+            <label class="form-check-label" for="flexSwitchCheckChecked">Mis tareas</label>
+          </div>
+    <h3 class="font-weight-light " style="display: inline-block; text-align: center;" >Kanban Board</h3>
+    <input type="hidden" th:value="${proyecto.id_proyecto}" id="idProyecto" />
+    <input type="hidden" th:value="${session.idUsuario}" id="idUsuario" />
+
+
+    <!--<button type="button" style="display: inline-block;float: right;" class="btn btn-secondary" onclick="$('#crear_modal').show()">Mis Tareas 👤</button> -->
+    <button type="button" style="display: inline-block;float: right;" class="btn btn-success" onclick="$('#crear_modal').show()">Crear Tarea ➕</button>
+</div>
+    <div class="row flex-row flex-sm-nowrap py-3">
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h6 class="card-title text-uppercase text-truncate py- columna">Preparada</h6>
+                    <div class="items border border-light">
+                        <div class="card draggable shadow-sm" id="tsk10" draggable="true" ondragstart="drag(event)">
+                            <div class="card-body p-2">
+                                <div class="card-title">
+                                    <span class="badge rounded-pill bg-danger">Alta</span>
+                                    <a href="" class="lead font-weight-light">TSK-10</a>
+                                    <a href="" style="text-align: right;float: right;" >Luis</a>
+                                </div>
+                                <p>
+                                    This is a description of a item on the board.
+                                </p>
+                                <button class="btn btn-primary btn-sm">View</button>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                        <div class="card draggable shadow-sm" id="tsk9" draggable="true" ondragstart="drag(event)"  >
+                            <div class="card-body p-2">
+                                <div class="card-title">
+                                    <span class="badge rounded-pill bg-success">Baja</span>
+                                    <a href="" class="lead font-weight-light">TSK-9</a>
+                                    <a href="" style="text-align: right;float: right;" >Erik</a>
+
+                                </div>
+                                <p>
+                                    This is a description of a item on the board.
+                                </p>
+                                <button class="btn btn-primary btn-sm">View</button>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                        <div class="card draggable shadow-sm" id="tsk8" draggable="true" ondragstart="drag(event)">
+                            <div class="card-body p-2">
+                                <div class="card-title">
+                                    <span class="badge rounded-pill bg-Warning">Media</span>
+                                    <a href="" class="lead font-weight-light">TSK-8</a>
+                                    <a href="" style="text-align: right;float: right;" >Sergio</a>
+
+                                </div>
+                                <p>
+                                    This is an item on the board. There is some descriptive text that explains the item here.
+                                </p>
+                                <button class="btn btn-primary btn-sm">View</button>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h6 class="card-title text-uppercase text-truncate py-2 columna">En Curso</h6>
+                    <div class="items border border-light">
+                        <div class="card draggable shadow-sm" id="tsk1" draggable="true" ondragstart="drag(event)">
+                            <div class="card-body p-2">
+                                <div class="card-title">
+                                    <span class="badge rounded-pill bg-danger">Alta</span>
+                                    <a href="" class="lead font-weight-light">TSK-1</a>
+                                    <a href="" style="text-align: right;float: right;" >Alejandro</a>
+
+                                </div>
+                                <p>
+                                    This is a task that is being worked on.
+                                </p>
+                                <button class="btn btn-primary btn-sm">View</button>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                        <div class="card draggable shadow-sm" id="tsk2" draggable="true" ondragstart="drag(event)">
+                            <div class="card-body p-2">
+                                <div class="card-title">
+                                    <span class="badge rounded-pill bg-success">Baja</span>
+                                    <a href="" class="lead font-weight-light">TSK-2</a>
+                                    <a href="" style="text-align: right;float: right;" >Jessica</a>
+
+                                </div>
+                                <p>
+                                    Another task here that is in progress.
+                                </p>
+                                <button class="btn btn-primary btn-sm">View</button>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h6 class="card-title text-uppercase text-truncate py-2 columna">En revisión</h6>
+                    <div class="items border border-light">
+                        <div class="card draggable shadow-sm" id="tsk3" draggable="true" ondragstart="drag(event)">
+                            <div class="card-body p-2">
+                                <div class="card-title">
+                                    <span class="badge rounded-pill bg-Warning">Media</span>
+                                    <a href="" class="lead font-weight-light">TSK-4</a>
+                                    <a href="" style="text-align: right;float: right;" >Salma</a>
+
+                                </div>
+                                <p>
+                                    This is a description of a item on the board.
+                                </p>
+                                <button class="btn btn-primary btn-sm">View</button>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                        <div class="card draggable shadow-sm" id="tsk12" draggable="true" ondragstart="drag(event)">
+                            <div class="card-body p-2">
+                                <div class="card-title">
+                                    <span class="badge rounded-pill bg-danger">Alta</span>
+                                    <a href="" class="lead font-weight-light">TSK-12</a>
+                                    <a href="" style="text-align: right;float: right;" >Christopher</a>
+
+                                </div>
+                                <p>
+                                    This is a description of a item on the board.
+                                </p>
+                                <button class="btn btn-primary btn-sm">View</button>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title text-uppercase text-truncate py-2 columna">Finalizada</h6>
+                    <div class="items border border-light">
+                        <div class="card draggable shadow-sm" id="tsk6" draggable="true" ondragstart="drag(event)">
+                            <div class="card-body p-2">
+                                <div class="card-title">
+                                    <span class="badge rounded-pill bg-success">Baja</span>
+                                    <a href="" class="lead font-weight-light">TSK-6</a>
+                                    <a href="" style="text-align: right;float: right;" >Moha</a>
+
+                                </div>
+                                <p>
+                                    This is a description of an item.
+                                </p>
+                                <button class="btn btn-primary btn-sm">View</button>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                        <div class="card draggable shadow-sm" id="tsk5" draggable="true" ondragstart="drag(event)">
+                            <div class="card-body p-2">
+                                <div class="card-title">
+                                    <span class="badge rounded-pill bg-success">Baja</span>
+                                    <a href="" class="lead font-weight-light">TSK-5</a>
+                                    <a href="" style="text-align: right;float: right;" >David</a>
+
+                                </div>
+                                <p>
+                                    This is a description of a task item.
+                                </p>
+                                <button class="btn btn-primary btn-sm">View</button>
+                            </div>
+                        </div>
+                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="editar_modal" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Tarea</h5>
+                <button type="button" onclick="$('#editar_modal').hide()" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+               <!-- <form action="#" method="POST" class="form-signin">-->
+
+                    <fieldset>
+
+                        <div class="form-group">
+                            <label for="inputNombre">Identificador de la tarea</label> <input type="text"
+                                class="form-control" id="inputId" disabled>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="inputNombre">Nombre de la tarea</label> <input type="text"
+                                class="form-control" id="inputNombre" 
+                                placeholder="Crear test de unidad..">
+                            <small id="inputNombre" class="form-text text-muted">Se
+                                claro con el nombre</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputNombre">Descripcion de la tarea</label> <textarea
+                                class="form-control" id="inputDescripcion" 
+                                placeholder="Crear pruebas para validadar las funcionalidades."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputPrioridad">Prioridad</label>
+                            <select class="form-select" id="inputPrioridad">
+                                <option id="opcion1" value="BAJA">Baja</option >
+                                <option id="opcion2"value="MEDIA">Media</option>
+                                <option id="opcion3"value="ALTA">Alta</option>
+                            </select>
+                        </div>
+
+						<div class="form-group">
+                            <label for="inputEmpleado">Empleado que realiza la tarea</label>  <input type="text"
+                                class="form-control" id="inputEmpleado" disabled>
+                        </div>
+<!--  
+                        <div class="form-group">
+                            <label for="inputTrabajadores">Empleados</label> <select multiple=""  class="form-select"
+                                id="inputTrabajadores">
+                                <option selected="selected" value="1">Luis</option>
+                                <option value="2">Erik</option>
+                                <option value="3">Sergio</option>
+                                <option value="4">Alejandro</option>
+                                <option value="5">Moha</option>
+                                <option value="6">David</option>
+                                <option value="7">Jessica</option>
+                                <option value="8">Salma</option>
+                                <option value="9">Christohper</option>
+                            </select>
+  -->						 <label for="inputTrabajadores">Empleados</label>
+                            <select  class="form-select"  id="inputTrabajadores" required="required" >
+							            <option selected="selected" th:each="user : ${usuarios}"
+							                    th:text="${user.nombre_usuario}"
+							                    th:value="${user.id_usuario}"/>
+							</select>
+                        </div>
+                        <br>
+                        <center> <button onclick="editarTarea()" class="btn btn-lg btn-primary btn-block">Modificar
+                                Tarea
+                            </button>
+                            <button onclick="eliminarTarea()" class="btn btn-lg btn-danger btn-block">Borrar 
+                                Tarea
+                            </button> </center>
+
+                    </fieldset>
+              <!--  </form>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="crear_modal" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Añadir Tarea</h5>
+                <button type="button" onclick="$('#crear_modal').hide()" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                 <!--   <form th:action="@{/anadir/{idProyecto} (idProyecto=${proyecto.id_proyecto})}" method="POST" class="form-signin">-->
+                                        <fieldset>
+
+                        <div class="form-group">
+                            <label for="inputNombre">Nombre de la tarea</label> <input type="text"
+                                class="form-control" id="inputNombreCrear" aria-describedby="emailHelp"
+                                placeholder="Crear test de unidad..">
+                            <small id="inputNombre" class="form-text text-muted">Se
+                                claro con el nombre</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputNombre">Descripcion de la tarea</label> <textarea
+                                class="form-control" id="inputDescripcionCrear" 
+                                placeholder="Crear pruebas para validadar las funcionalidades."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPrioridad">Prioridad</label>
+                            <select class="form-select" id="inputPrioridadCrear">
+                                <option value="BAJA">Baja</option>
+                                <option value="MEDIA">Media</option>
+                                <option value="ALTA">Alta</option>
+                            </select>
+                        </div>
+
+
+						<!-- 
+                        <div class="form-group">
+                            <label for="inputTrabajadores">Empleados</label> <select multiple="" class="form-select"
+                                id="inputTrabajadoresCrear">
+                                <option value="1">Luis</option>
+                                <option value="2">Erik</option>
+                                <option value="3">Sergio</option>
+                                <option value="4">Alejandro</option>
+                                <option value="5">Salma</option>
+                                <option value="6">Jessica</option>
+                                <option value="7">Moha</option>
+                                <option value="8">David</option>
+                                <option value="9">Christohper</option>
+                            </select>
+                        </div> -->
+                        <br>
+                        <center> <button class="btn btn-lg btn-primary btn-block" onclick="crearTarea()" type="submit">Añadir Tarea
+                            </button> </center>
+
+                    </fieldset>
+                <!--   </form> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
+
